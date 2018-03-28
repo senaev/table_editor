@@ -27,6 +27,14 @@ class Table__row {
         this.tr.appendChild(this.name);
         this.tr.appendChild(this.value);
         this.container.appendChild(this.tr)
+        
+        this.endEditData = (e, old) => {
+            if(!e.target.matches('input')){
+                let input = this.container.getElementsByTagName('input')[0];
+                input.parentNode.innerHTML = input.value;
+                this.container.removeEventListener('click', this.endEditData})
+            }
+        }
     }
 
     startEditData(e){
@@ -34,14 +42,7 @@ class Table__row {
         input.value = e.target.innerHTML;
         e.target.innerHTML = ' ';   
         e.target.appendChild(input);
-        this.container.addEventListener('click', (e)=>{this.endEditData(e)})
-    }
-    endEditData(e, old){
-        if(!e.target.matches('input')){
-            let input = this.container.getElementsByTagName('input')[0];
-            input.parentNode.innerHTML = input.value;
-            this.container.removeEventListener('click', (e)=>{this.endEditData(e)})
-        }
+        this.container.addEventListener('click', this.endEditData})
     }
 }
 
